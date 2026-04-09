@@ -50,7 +50,7 @@
         openmodelica = final.callPackage ./openmodelica.nix {
           openmodelica-core = final.openmodelica-core;
         };
-        qt5 = prev.qt5.overrideScope' (
+        qt5 = prev.qt5.overrideScope (
           finalQt: prevQt: {
             qtwebkit = prevQt.qtwebkit.overrideAttrs (oldAttrs: {
               cmakeFlags = (oldAttrs.cmakeFlags or [ ]) ++ [
