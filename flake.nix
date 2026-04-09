@@ -6,18 +6,25 @@
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, flake-utils }:
-    flake-utils.lib.eachSystem [ "x86_64-linux" "aarch64-linux" ] (system:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      flake-utils,
+    }:
+    flake-utils.lib.eachSystem [ "x86_64-linux" "aarch64-linux" ] (
+      system:
       let
         pkgs = import nixpkgs {
           inherit system;
           config.permittedInsecurePackages = [
             "python-2.7.18.8"
+            "qtwebkit-5.212.0-alpha4"
           ];
         };
 
         openmodelica-core = pkgs.callPackage ./openmodelica-core.nix { };
-        openmodelica     = pkgs.callPackage ./openmodelica.nix {
+        openmodelica = pkgs.callPackage ./openmodelica.nix {
           inherit openmodelica-core;
         };
       in
@@ -33,17 +40,24 @@
           packages = [ openmodelica ];
         };
       }
-    ) // {
+    )
+    // {
       # ── Overlay（可在其他 flake 中使用） ──────────────────────────────────
       overlays.default = final: prev: {
         openmodelica-core = final.callPackage ./openmodelica-core.nix { };
-        openmodelica      = final.callPackage ./openmodelica.nix {
+        openmodelica = final.callPackage ./openmodelica.nix {
           openmodelica-core = final.openmodelica-core;
         };
       };
 
       # ── NixOS module（可直接加入 configuration.nix） ──────────────────────
-      nixosModules.default = { pkgs, lib, config, ... }:
+      nixosModules.default =
+        {
+          pkgs,
+          lib,
+          config,
+          ...
+        }:
         let
           cfg = config.programs.openmodelica;
           omPkgs = import nixpkgs {
@@ -51,7 +65,7 @@
             config.permittedInsecurePackages = [ "python-2.7.18.8" ];
           };
           openmodelica-core = omPkgs.callPackage ./openmodelica-core.nix { };
-          openmodelica      = omPkgs.callPackage ./openmodelica.nix {
+          openmodelica = omPkgs.callPackage ./openmodelica.nix {
             inherit openmodelica-core;
           };
         in
