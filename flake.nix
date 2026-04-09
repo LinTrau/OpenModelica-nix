@@ -57,7 +57,9 @@
                 "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
                 "-DCMAKE_CXX_STANDARD=14"
               ];
-              NIX_CFLAGS_COMPILE = (oldAttrs.NIX_CFLAGS_COMPILE or "") + " -std=c++14 -fpermissive";
+              env = (oldAttrs.env or { }) // {
+                NIX_CFLAGS_COMPILE = (oldAttrs.NIX_CFLAGS_COMPILE or "") + " -std=c++14 -fpermissive";
+              };
             });
           }
         );
