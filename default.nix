@@ -10,14 +10,20 @@
     }
   )
   {
-    config.permittedInsecurePackages = [ "python-2.7.18.8" ];
+    config.permittedInsecurePackages = [
+      "python-2.7.18.8"
+      "qtwebkit-5.212.0-alpha4"
+    ];
   }
 ).callPackage
   ./openmodelica.nix
   {
     openmodelica-core =
       (import <nixpkgs> {
-        config.permittedInsecurePackages = [ "python-2.7.18.8" ];
+        config.permittedInsecurePackages = [
+          "python-2.7.18.8"
+          "qtwebkit-5.212.0-alpha4"
+        ];
       }).callPackage
         ./openmodelica-core.nix
         { };
