@@ -8,33 +8,31 @@
 ### 1. 临时试用
 
 ```bash
-nix run github:your-user/openmodelica-flake
+nix run github:your-user/openmodelica-nix
 # 或者进入 shell
-nix develop github:your-user/openmodelica-flake
+nix develop github:your-user/openmodelica-nix
 ```
 
 ### 2. 安装到用户 profile
 
 ```bash
-nix profile install github:your-user/openmodelica-flake
+nix profile install github:your-user/openmodelica-nix
 ```
 
 ### 3. 加入 NixOS 系统配置
 
-**方式 A — 用内置 NixOS Module：**
-
 ```nix
-# flake.nix（你自己系统的）
+# flake.nix
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
-    openmodelica.url = "github:your-user/openmodelica-flake";
+    openmodelica-nix.url = "github:your-user/openmodelica-nix";
   };
 
   outputs = { nixpkgs, openmodelica, ... }: {
     nixosConfigurations.yourhost = nixpkgs.lib.nixosSystem {
       modules = [
-        openmodelica.nixosModules.default
+        openmodelica-nix.nixosModules.default
         {
           programs.openmodelica.enable = true;
         }
@@ -44,37 +42,6 @@ nix profile install github:your-user/openmodelica-flake
 }
 ```
 
-**方式 B — 用 overlay，手动加入 systemPackages：**
-
-```nix
-# flake.nix
-{
-  inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
-    openmodelica.url = "github:your-user/openmodelica-flake";
-  };
-
-  outputs = { nixpkgs, openmodelica, ... }: {
-    nixosConfigurations.yourhost = nixpkgs.lib.nixosSystem {
-      modules = [
-        { nixpkgs.overlays = [ openmodelica.overlays.default ]; }
-        {
-          nixpkgs.config.permittedInsecurePackages = [ "python-2.7.18.8" ];
-          environment.systemPackages = [ pkgs.openmodelica ];
-        }
-      ];
-    };
-  };
-}
-```
-
-**方式 C — 直接引用 package：**
-
-```nix
-environment.systemPackages = [
-  openmodelica.packages.x86_64-linux.default
-];
-```
 
 ## 文件说明
 
