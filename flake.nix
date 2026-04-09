@@ -73,6 +73,7 @@
           cfg = config.programs.openmodelica;
           omPkgs = import nixpkgs {
             inherit (pkgs.stdenv.hostPlatform) system;
+            overlays = [ self.overlays.default ];
             config.permittedInsecurePackages = [
               "python-2.7.18.8"
               "qtwebkit-5.212.0-alpha4"
