@@ -62,7 +62,10 @@
           cfg = config.programs.openmodelica;
           omPkgs = import nixpkgs {
             inherit (pkgs.stdenv.hostPlatform) system;
-            config.permittedInsecurePackages = [ "python-2.7.18.8" ];
+            config.permittedInsecurePackages = [
+              "python-2.7.18.8"
+              "qtwebkit-5.212.0-alpha4"
+            ];
           };
           openmodelica-core = omPkgs.callPackage ./openmodelica-core.nix { };
           openmodelica = omPkgs.callPackage ./openmodelica.nix {
