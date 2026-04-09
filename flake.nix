@@ -20,6 +20,8 @@
           config.permittedInsecurePackages = [
             "python-2.7.18.8"
             "qtwebkit-5.212.0-alpha4"
+            "qtwebengine-5.15.19"
+
           ];
         };
 
@@ -65,6 +67,7 @@
             config.permittedInsecurePackages = [
               "python-2.7.18.8"
               "qtwebkit-5.212.0-alpha4"
+              "qtwebengine-5.15.19"
             ];
           };
           openmodelica-core = omPkgs.callPackage ./openmodelica-core.nix { };
