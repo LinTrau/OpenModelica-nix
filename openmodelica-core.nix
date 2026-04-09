@@ -109,7 +109,12 @@ stdenv.mkDerivation {
     openssl
     python2
     python3
-    qt5.full
+    qt5.qtbase
+    qt5.qtsvg
+    qt5.qtxmlpatterns
+    qt5.qttools
+    qt5.qtwebkit
+    qt5.qtwebengine
     readline
     readline.dev
     sundials
