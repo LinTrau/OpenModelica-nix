@@ -91,7 +91,7 @@
           };
 
           config = lib.mkIf cfg.enable {
-            config.permittedInsecurePackages = [
+            nixpkgs.config.permittedInsecurePackages = [
               "python-2.7.18.8"
               "qtwebkit-5.212.0-alpha4"
               "qtwebengine-5.15.19"
