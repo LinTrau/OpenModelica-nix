@@ -50,6 +50,15 @@
         openmodelica = final.callPackage ./openmodelica.nix {
           openmodelica-core = final.openmodelica-core;
         };
+        qt5 = prev.qt5.overrideScope' (
+          finalQt: prevQt: {
+            qtwebkit = prevQt.qtwebkit.overrideAttrs (oldAttrs: {
+              cmakeFlags = (oldAttrs.cmakeFlags or [ ]) ++ [
+                "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
+              ];
+            });
+          }
+        );
       };
 
       # ── NixOS module（可直接加入 configuration.nix） ──────────────────────
@@ -69,7 +78,6 @@
               "qtwebkit-5.212.0-alpha4"
               "qtwebengine-5.15.19"
               "python-2.7.18.12"
-
             ];
           };
           openmodelica-core = omPkgs.callPackage ./openmodelica-core.nix { };
@@ -83,6 +91,13 @@
           };
 
           config = lib.mkIf cfg.enable {
+            config.permittedInsecurePackages = [
+              "python-2.7.18.8"
+              "qtwebkit-5.212.0-alpha4"
+              "qtwebengine-5.15.19"
+              "python-2.7.18.12"
+            ];
+
             environment.systemPackages = [ openmodelica ];
           };
         };

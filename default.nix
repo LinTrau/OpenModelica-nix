@@ -15,7 +15,6 @@
       "qtwebkit-5.212.0-alpha4"
       "qtwebengine-5.15.19"
       "python-2.7.18.12"
-
     ];
   }
 ).callPackage
@@ -28,7 +27,6 @@
           "qtwebkit-5.212.0-alpha4"
           "qtwebengine-5.15.19"
           "python-2.7.18.12"
-
         ];
       }).callPackage
         ./openmodelica-core.nix
