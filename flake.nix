@@ -56,6 +56,8 @@
               cmakeFlags = (oldAttrs.cmakeFlags or [ ]) ++ [
                 "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
                 "-DCMAKE_CXX_STANDARD=14"
+                "-DENABLE_VIDEO=OFF"
+                "-DENABLE_GEOLOCATION=OFF"
               ];
               env = (oldAttrs.env or { }) // {
                 NIX_CFLAGS_COMPILE = (oldAttrs.NIX_CFLAGS_COMPILE or "") + " -std=c++14 -fpermissive";
