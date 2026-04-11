@@ -60,7 +60,9 @@
                 "-DENABLE_GEOLOCATION=OFF"
               ];
               env = (oldAttrs.env or { }) // {
-                NIX_CFLAGS_COMPILE = (oldAttrs.NIX_CFLAGS_COMPILE or "") + " -std=c++14 -fpermissive";
+                NIX_CFLAGS_COMPILE =
+                  (oldAttrs.env.NIX_CFLAGS_COMPILE or (oldAttrs.NIX_CFLAGS_COMPILE or ""))
+                  + " -std=c++14 -fpermissive -Wno-error -Wno-narrowing -Wno-attributes -Wno-class-memaccess";
               };
             });
           }
